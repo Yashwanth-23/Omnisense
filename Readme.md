@@ -50,7 +50,7 @@ Use Docker Compose to build the environment and start the servers. This will aut
 
 ### 4. Access the UI
 Once the terminal shows the Uvicorn server is running, open your web browser and navigate to `http://localhost:8501`
-
+ It Should look like this : ![Omnisense User Interface](ui.png)
 ---
 
 ## 🛡️ Privacy
