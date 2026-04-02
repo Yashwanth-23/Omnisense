@@ -48,9 +48,11 @@ Use Docker Compose to build the environment and start the servers. This will aut
 
 *(Note: The first time you process an audio file, it may take a minute or two to download the Whisper weights into the container).*
 
-### 4. Access the UI
+#### 4. Access the UI
 Once the terminal shows the Uvicorn server is running, open your web browser and navigate to `http://localhost:8501`
+
+![Omnisense User Interface](UI.png)
 ---
-![Omnisense User Interface](ui.png)
+
 ## 🛡️ Privacy
 Omnisense is designed for absolute privacy. It does not require API keys, it does not send telemetry, and it operates entirely offline (aside from the initial model downloads). Your files and databases remain on your local hard drive.
