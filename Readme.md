@@ -50,8 +50,7 @@ Use Docker Compose to build the environment and start the servers. This will aut
 
 ### 4. Access the UI
 Once the terminal shows the Uvicorn server is running, open your web browser and navigate to `http://localhost:8501`
-It Should look like this : ![Omnisense User Interface](ui.png)
 ---
-
+![Omnisense User Interface](ui.png)
 ## 🛡️ Privacy
 Omnisense is designed for absolute privacy. It does not require API keys, it does not send telemetry, and it operates entirely offline (aside from the initial model downloads). Your files and databases remain on your local hard drive.
