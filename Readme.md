@@ -38,7 +38,7 @@ Omnisense relies on Llama 3.2 to process the data and answer your questions. Pul
 ### 2. Clone the Repository
 Download the project files to your computer:
 
-    git clone [https://github.com/Yashwanth-23/Omnisense.git](https://github.com/Yashwanth-23/Omnisense.git)
+    git clone https://github.com/Yashwanth-23/Omnisense.git
     cd Omnisense
 
 ### 3. Build and Launch
