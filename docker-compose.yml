@@ -1,0 +1,20 @@
+services:
+  omnisense-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./chroma_db:/app/chroma_db
+    environment:
+      - OLLAMA_HOST=host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # --- THIS SECTION UNLOCKS YOUR GTX 1650 Ti ---
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

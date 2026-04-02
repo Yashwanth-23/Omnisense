@@ -1,0 +1,16 @@
+[theme]
+# The main accent color (Used for buttons, loading spinners, and highlights)
+# Let's go with a cyberpunk Neon Purple. (You can change this hex code to anything!)
+primaryColor = "#B800FF"
+
+# The main app background color (Deep black)
+backgroundColor = "#0A0A0A"
+
+# The sidebar and chat bubble background color (Dark grey so it stands out)
+secondaryBackgroundColor = "#1A1A1A"
+
+# The text color (Off-white so it doesn't hurt your eyes)
+textColor = "#E0E0E0"
+
+# The font style (Options: "sans serif", "serif", or "monospace")
+font = "sans serif"

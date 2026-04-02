@@ -1,0 +1,25 @@
+# Python and Environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Database and Models
+chroma_db/
+*.pt
+*.bin
+
+# Temporary media files (from Whisper processing)
+temp_*
+*.mp4
+*.mp3
+*.wav
+*.jpg
+*.png
+*.pdf
+
+# OS generated files
+.DS_Store
+Thumbs.db
