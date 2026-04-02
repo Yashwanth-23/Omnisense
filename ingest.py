@@ -17,7 +17,7 @@ def download_audio(youtube_url):
     return "temp_audio.wav"
 
 def transcribe_local(audio_path):
-    # 'base' is small and fast. Perfect for CPU testing.
+    # I used 'Medium' which is decent size and fast and Perfect for my CPU testing. Feel free to change it.
     model_size = "medium"
     print(f"Loading local Whisper model ({model_size})...")
     

@@ -112,7 +112,6 @@ async def process_file(file: UploadFile = File(...)):
             img_stream.seek(0)
 
             # 1. Read the image bytes into memory
-            #contents = await file.read()
             image = Image.open(img_stream)
             
             # 2. Extract the text using Tesseract
@@ -133,7 +132,7 @@ async def process_file(file: UploadFile = File(...)):
             
             return {"status": "success", "message": f"Memorized Image Text: {file.filename}"}
     
-        # --- 2: THE AUDIO BRAIN (WHISPER) ---
+        # --- 2: THE AUDIO (WHISPER) ---
         elif file.filename.lower().endswith(('.mp4', '.mp3', '.wav', '.m4a')):
             
             # 1. Whisper needs a physical file on the hard drive, not just memory bytes
@@ -149,7 +148,7 @@ async def process_file(file: UploadFile = File(...)):
             # 3. Clean up the temporary file so Docker doesn't fill up
             os.remove(temp_path)
 
-            # --- NEW: FREE THE MEMORY ---
+            # --- FREE THE MEMORY ---
             del model
             gc.collect()
             
@@ -182,7 +181,7 @@ async def chat_endpoint(data: dict):
         if db_size == 0:
             return {"status": "success", "agent_response": "My memory is empty. Please upload a file or URL first!"}
             
-        # Fetch up to 5 chunks, or fewer if the document is small
+        # Fetch up to 5 chunks, or fewer if the document is small (you can tweak according to the documents you feed)
         fetch_count = min(db_size, 5)
         results = collection.query(query_texts=[user_query], n_results=fetch_count)
         
@@ -192,7 +191,7 @@ async def chat_endpoint(data: dict):
     except Exception as e:
         return {"status": "error", "agent_response": f"Database Error: {str(e)}"}
     
-    # --- THE OMNI-PROMPT ---
+    # --- THE OMNI-PROMPT (You can change it depending on your needs and responses)---
     prompt = f"""
     [SYSTEM ROLE]
     You are Omnisense, an intelligent and helpful AI assistant. You answer questions based ONLY on the provided MEMORY context.

@@ -5,20 +5,20 @@ import chromadb
 
 print("Loading Omnisense LangGraph Agent...")
 
-# 1. Connect to the Memory Bank
+# 1. Connect to the Vector Database
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 collection = chroma_client.get_collection(name="langchain")
 
 # 2. Build the Tool
 @tool
 def search_video_memory(query: str) -> str:
-    """Use this tool to search the Spider-Man video transcript. Use it when asked about MIT, Peter Parker, or the video."""
+    """Query the audio or video or webpage transcription database. Use this tool to retrieve dialogue, events, and context from media files the user has uploaded. Input should be a specific search query based on the user's question."""
     print(f"\n[🔧 TOOL TRIGGERED] Searching database for: {query}")
     results = collection.query(query_texts=[query], n_results=1)
     
     if results['documents'] and results['documents'][0]:
         return results['documents'][0][0]
-    return "No information found in the video memory."
+    return "No information found in the memory."
 
 # 3. Initialize the Modern Chat Model
 llm = ChatOllama(model="llama3.2")

@@ -5,12 +5,12 @@ from langchain_chroma import Chroma
 
 def build_vector_db():
     print("1. Loading the transcript...")
-    # Load the text file you just created
+    # Loading the text file you just created
     loader = TextLoader("transcript.txt", encoding="utf-8")
     docs = loader.load()
 
     print("2. Slicing text into chunks...")
-    # Break the text into 300-character blocks with a 20-character overlap so we don't cut sentences in half
+    # Break the text into xxx character blocks with a xxx-character overlap so the sentences won't cut in half (You can set them based on your transcript)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=300)
     chunks = text_splitter.split_documents(docs)
     print(f"   Created {len(chunks)} discrete memory chunks.")
