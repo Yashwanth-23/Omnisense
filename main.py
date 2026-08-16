@@ -129,10 +129,12 @@ def chunk_and_upsert(text: str, source: str, base_id: str, doc_type: str = "text
     )
     return len(chunks)
 
-def sync_ocr(image_bytes: bytes) -> str:
-    img_stream = io.BytesIO(image_bytes)
-    image = Image.open(img_stream)
-    return pytesseract.image_to_string(image)
+def sync_ocr(content: bytes) -> str:
+    image = Image.open(io.BytesIO(content))
+    raw_text = pytesseract.image_to_string(image)
+    # Strip unprintable and non-ASCII characters that trigger Llama 3.2 safety filters
+    clean_text = re.sub(r'[^\x00-\x7F]+', ' ', raw_text)
+    return clean_text
 
 def sync_whisper(file_path: str) -> str:
     model = get_whisper_model()
