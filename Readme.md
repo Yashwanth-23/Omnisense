@@ -29,8 +29,8 @@ flowchart TD
         end
         
         Chunk[Text Chunking <br> LangChain Recursive Splitter]
-        DB[(ChromaDB <br> Vector Store)]
-        LLM((Ollama <br> Llama 3.2 LLM))
+        DB[ChromaDB <br> Vector Store]
+        LLM[Ollama <br> Llama 3.2 LLM]
         
         Doc --> Chunk
         Vis --> Chunk
