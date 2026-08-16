@@ -37,7 +37,7 @@ WHISPER_MODEL_SIZE = os.getenv("WHISPER_MODEL_SIZE", "small")
 # ---------------------------------------------------------------------------
 # Ingestion Limits
 # ---------------------------------------------------------------------------
-MAX_UPLOAD_SIZE_MB = int(os.getenv("MAX_UPLOAD_SIZE_MB", "100"))
+MAX_UPLOAD_SIZE_MB = int(os.getenv("MAX_UPLOAD_SIZE_MB", "200"))
 MAX_CONTEXT_CHUNKS = int(os.getenv("MAX_CONTEXT_CHUNKS", "5"))
 
 # ---------------------------------------------------------------------------
