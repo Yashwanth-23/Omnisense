@@ -268,7 +268,7 @@ async def chat_endpoint(req: ChatRequest):
             return {"status": "success", "agent_response": "My memory is empty. Please upload a file or URL first!"}
             
         fetch_count = min(db_size, config.MAX_CONTEXT_CHUNKS)
-        results = await asyncio.to_thread(collection.query, query_texts=[user_query], n_results=fetch_count)
+        results = collection.query(query_texts=[user_query], n_results=fetch_count)
         
         context = " ".join(results['documents'][0]) if results and results.get('documents') and results['documents'][0] else "No memory found."
         
@@ -311,7 +311,7 @@ You are Omnisense, an intelligent and helpful AI assistant. You answer questions
     logger.debug(f"Omni-Prompt Context length: {len(context)}")
     
     try:
-        response = await asyncio.to_thread(llm.invoke, prompt)
+        response = await llm.ainvoke(prompt)
         return {"status": "success", "agent_response": response.content}
     except Exception as e:
         logger.error(f"LLM Error: {e}")
