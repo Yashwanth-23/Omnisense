@@ -18,7 +18,7 @@ Because everything runs locally via Docker and Ollama, **zero data ever leaves y
 flowchart TD
     UI[Streamlit Frontend <br> port 8501]
     
-    subgraph Backend [FastAPI Backend Engine <br> port 8000]
+    subgraph Backend [FastAPI Backend Engine - port 8000]
         direction TB
         
         subgraph Ingestion [Multimodal Ingestion]
