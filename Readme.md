@@ -122,7 +122,7 @@ All settings are configurable via environment variables or a `.env` file:
 | `OLLAMA_BASE_URL` | `http://host.docker.internal:11434` | Ollama server address |
 | `OLLAMA_MODEL` | `llama3.2` | LLM model name |
 | `WHISPER_MODEL_SIZE` | `small` | Whisper model (`tiny`, `base`, `small`, `medium`, `large`) |
-| `MAX_UPLOAD_SIZE_MB` | `100` | Maximum file upload size |
+| `MAX_UPLOAD_SIZE_MB` | `200` | Maximum file upload size |
 | `MAX_CONTEXT_CHUNKS` | `5` | Number of context chunks for RAG retrieval |
 | `CHUNK_SIZE` | `1500` | Text chunk size for splitting documents |
 | `CHUNK_OVERLAP` | `300` | Overlap between text chunks |
