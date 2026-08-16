@@ -3,6 +3,7 @@ import io
 import gc
 import logging
 import asyncio
+import re
 import tempfile
 import socket
 from urllib.parse import urlparse
