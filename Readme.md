@@ -14,36 +14,33 @@ Because everything runs locally via Docker and Ollama, **zero data ever leaves y
 
 ## 🏗️ Architecture
 
-```
-┌────────────────────────────┐
-│    Streamlit Frontend      │
-│    (port 8501)             │
-└────────────┬───────────────┘
-             │ HTTP
-             ▼
-┌──────────────────────────────────────────────────────┐
-│              FastAPI Backend (port 8000)              │
-│                                                      │
-│  ┌──────────────┬───────────────┬──────────────────┐ │
-│  │ Documents    │ Vision (OCR)  │ Audio (Whisper)  │ │
-│  │ • PyMuPDF    │ • Tesseract   │ • openai-whisper │ │
-│  │ • WebLoader  │ • Pillow      │ • FFmpeg         │ │
-│  │ • YT API     │               │                  │ │
-│  └──────┬───────┴───────┬───────┴─────────┬────────┘ │
-│         └───────────────┼─────────────────┘          │
-│                         ▼                            │
-│         ┌──────────────────────────┐                 │
-│         │ Text Chunking (LangChain)│                 │
-│         └───────────┬──────────────┘                 │
-│                     ▼                                │
-│         ┌──────────────────────────┐                 │
-│         │ ChromaDB (Vector Store)  │                 │
-│         └───────────┬──────────────┘                 │
-│                     ▼                                │
-│         ┌──────────────────────────┐                 │
-│         │ Ollama (Llama 3.2 LLM)  │                 │
-│         └──────────────────────────┘                 │
-└──────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    UI[Streamlit Frontend <br> port 8501] -->|HTTP| API[FastAPI Backend <br> port 8000]
+    
+    subgraph Backend [FastAPI Backend Engine]
+        direction TB
+        
+        subgraph Ingestion [Multimodal Ingestion]
+            direction LR
+            Doc[Documents <br> PyMuPDF / WebLoader / YT API]
+            Vis[Vision OCR <br> Tesseract / Pillow]
+            Aud[Audio <br> faster-whisper / FFmpeg]
+        end
+        
+        Chunk[Text Chunking <br> LangChain Recursive Splitter]
+        DB[(ChromaDB <br> Vector Store)]
+        LLM((Ollama <br> Llama 3.2 LLM))
+        
+        Doc --> Chunk
+        Vis --> Chunk
+        Aud --> Chunk
+        
+        Chunk --> DB
+        DB --> LLM
+    end
+    
+    API --> Ingestion
 ```
 
 ## 🛠️ Tech Stack
