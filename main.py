@@ -17,6 +17,11 @@ from youtube_transcript_api import YouTubeTranscriptApi
 import pymupdf as fitz
 from langchain_community.document_loaders import WebBaseLoader
 import pytesseract
+import sys
+
+# Explicitly set Tesseract path for Windows native execution
+if sys.platform == "win32":
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 from PIL import Image
 from faster_whisper import WhisperModel
 from langchain_text_splitters import RecursiveCharacterTextSplitter
