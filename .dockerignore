@@ -3,3 +3,25 @@ __pycache__/
 .vscode/
 *.pyc
 .env
+.git/
+chroma_db/
+
+# Media / sample files
+*.mp4
+*.mp3
+*.wav
+*.m4a
+*.jpg
+*.jpeg
+*.png
+*.pdf
+*.pt
+*.bin
+
+# Temp files
+temp_*
+transcript.txt
+
+# OS files
+.DS_Store
+Thumbs.db

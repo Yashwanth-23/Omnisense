@@ -1,21 +1,33 @@
-# 1. Using a lightweight Python image
-FROM python:3.12-slim
+# =============================================================================
+# Omnisense — FastAPI Backend Container
+# =============================================================================
+FROM python:3.11-slim
 
-# 2. Set the working directory inside the container
 WORKDIR /app
 
-# NEW: Install Tesseract AND ffmpeg at the OS level
-RUN apt-get update && apt-get install -y tesseract-ocr ffmpeg && rm -rf /var/lib/apt/lists/*
+# Install OS-level dependencies (Tesseract OCR + FFmpeg for Whisper)
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tesseract-ocr ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-# 3. Copy our list of libraries and install them
+# Install Python dependencies first (Docker layer caching)
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip "setuptools<70" wheel \
+    && pip install --no-cache-dir --no-build-isolation -r requirements.txt
 
-# 4. Copy the rest of our code (main.py, chroma_db folder, etc.)
-COPY . .
+# Copy application code
+COPY config.py .
+COPY main.py .
 
-# 5. Open the port FastAPI runs on
+# Create non-root user for security
+RUN useradd --create-home appuser \
+    && mkdir -p /app/chroma_db \
+    && chown -R appuser:appuser /app
+USER appuser
+
 EXPOSE 8000
 
-# 6. Command to start the server
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

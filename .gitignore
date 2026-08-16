@@ -6,6 +6,15 @@ venv/
 env/
 .env
 
+# Testing and tooling
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
 # Database and Models
 chroma_db/
 *.pt
@@ -16,9 +25,12 @@ temp_*
 *.mp4
 *.mp3
 *.wav
+*.m4a
 *.jpg
+*.jpeg
 *.png
 *.pdf
+transcript.txt
 
 # OS generated files
 .DS_Store

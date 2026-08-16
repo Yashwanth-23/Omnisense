@@ -1,16 +1,59 @@
+# =============================================================================
+# Omnisense — Docker Compose
+# Run:         docker compose up --build
+# With GPU:    docker compose --profile gpu up --build
+# =============================================================================
+
 services:
+
+  # --- FastAPI Backend (port 8000) ---
   omnisense-api:
     build: .
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
       - ./chroma_db:/app/chroma_db
+    env_file:
+      - .env
     environment:
-      - OLLAMA_HOST=host.docker.internal
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    # --- THIS SECTION UNLOCKS YOUR GTX 1650 Ti ---
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  # --- Streamlit Frontend (port 8501) ---
+  omnisense-ui:
+    image: python:3.12-slim
+    working_dir: /app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./app.py:/app/app.py:ro
+      - ./config.py:/app/config.py:ro
+      - ./.streamlit:/app/.streamlit:ro
+    env_file:
+      - .env
+    environment:
+      - BACKEND_URL=http://omnisense-api:8000
+    command: >
+      bash -c "pip install --no-cache-dir streamlit requests python-dotenv &&
+               streamlit run app.py --server.address 0.0.0.0 --server.port 8501"
+    depends_on:
+      omnisense-api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # --- GPU-accelerated API (optional profile) ---
+  omnisense-api-gpu:
+    extends:
+      service: omnisense-api
+    profiles:
+      - gpu
     deploy:
       resources:
         reservations:
